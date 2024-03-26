@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign up | Pennywise</title>
+  <link rel="stylesheet" href="{%static 'css/signup.css' %}">
+</head>
+
+<body>
+  <div class="wrapper">
+    <form action="#" method="post">
+      {% csrf_token %}
+      <h1>Create account</h1>
+      <div class="input-box">
+        <input type="text" placeholder="username" name="username" required>
+      </div>
+      <div class="input-box">
+        <input type="text" placeholder="First name" name="first_name" required>
+        <i class='bx bxs-user'></i>
+      </div>
+      <div class="input-box">
+        <input type="text" placeholder="Last name" name="last_name" required>
+        <i class='bx bxs-user'></i>
+      </div>
+      <div class="input-box">
+        <input type="email" placeholder="Email" name="email" required>
+        <i class='bx bxs-lock-alt'></i>
+      </div>
+      <div class="input-box">
+        <input type="number" placeholder="enter your income" name="income" required>
+      </div>
+      <div class="input-box">
+        <input class="pass" type="password" placeholder="Create Password" name="pass" required>
+        <ion-icon class="eyesymbol eon" onclick="viewpass()" name="eye"></ion-icon>
+        <ion-icon class="eyesymbol eoff" name="eye-off" onclick="viewpass()"></ion-icon>
+      </div>
+      <div class="input-box">
+        <input class="cpass" type="password" placeholder="Confirm Password" name="cpass" required>
+        <ion-icon class="c_eyesymbol c_eon" onclick="viewpass()" name="eye"></ion-icon>
+        <ion-icon class="c_eyesymbol c_eoff" name="eye-off" onclick="viewpass()"></ion-icon>
+      </div>
+      <!--<div class="remember-forgot">
+        <label><input type="checkbox">Remember Me</label>
+      </div>-->
+      <button type="submit" class="btn">Sign Up</button>
+      <div class="register-link">
+        <p>Already have an account? <a href="/signin/">Sign In</a></p>
+      </div>
+    </form>
+  </div>
+  <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+  <script>
+    let eon = document.querySelector(".eon")
+    let eoff = document.querySelector(".eoff")
+    let ceon = document.querySelector(".c_eon")
+    let ceoff = document.querySelector(".c_eoff")
+    function viewpass() {
+      var x = document.querySelector(".pass");
+      var y = document.querySelector(".cpass");
+      if (x.type === "password" && y.type === "password") {
+        x.type = "text";
+        y.type = "text";
+        eon.style = "display: none";
+        eoff.style = "display: block";
+        ceon.style = "display: none";
+        ceoff.style = "display: block";
+      } else {
+        x.type = "password";
+        y.type = "password";
+        eon.style = "display: block";
+        eoff.style = "display: none";
+        ceon.style = "display: block";
+        ceoff.style = "display: none";
+      }
+    }
+
+  </script>
+</body>
+
+</html>

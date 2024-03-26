@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | Pennywise</title>
+  <link rel="stylesheet" href="{%static 'css/signup.css' %}">
+</head>
+
+<body>
+  <div class="wrapper">
+    <form action="#" method="post">
+      {% csrf_token %}
+      <h1>Sign In</h1>
+      <div class="input-box">
+        <input type="text" placeholder="username" name="username" required>
+      </div>
+      <div class="input-box">
+        <input type="email" placeholder="Email" name="email" required>
+        <i class='bx bxs-user'></i>
+      </div>
+      <div class="input-box">
+        <input id="pass" type="password" name="password" placeholder="Password" required>
+        <ion-icon class="eyesymbol eon" onclick="viewpass()" name="eye"></ion-icon>
+        <ion-icon class="eyesymbol eoff" name="eye-off" onclick="viewpass()"></ion-icon>
+      </div>
+      <!--<div class="remember-forgot">
+        <label><input type="checkbox">Remember Me</label>
+      </div>-->
+      <button type="submit" class="btn">Login</button>
+      <div class="register-link">
+        <p>Don't have an account? <a href="/signup/">Sign Up</a></p>
+      </div>
+    </form>
+  </div>
+  <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+  <script>
+    let eon = document.querySelector(".eon")
+    let eoff = document.querySelector(".eoff")
+    function viewpass() {
+      var x = document.querySelector("#pass");
+      if (x.type === "password") {
+        x.type = "text";
+        eon.style = "display: none";
+        eoff.style = "display: block";
+        t = 1
+      } else {
+        x.type = "password";
+        eon.style = "display: block";
+        eoff.style = "display: none";
+        t = 0
+      }
+    }
+
+  </script>
+</body>
+
+</html>

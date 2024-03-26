@@ -1,0 +1,257 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Home | PennyWise</title>
+</head>
+
+<body>
+    <!--this is navigation bar-->
+    <header>
+        <div class="logo"><img src="{%static 'images/PennyWise (1).png'%}" alt="">pennywise</div>
+        <form method="post" style = "display: flex;">
+            {% csrf_token %}
+            <div>
+                <input type = "number" id="income_ipt" name = "gincome" placeholder="update your income">
+            </div>
+            <div>
+                <button name = "getincome"  type="submit" class="s_button">Submit</button>
+            </div>
+        </form>
+        <a class="logout" href="/signout/">Sign Out</a>
+    </header>
+    <!--this is row 1-->
+    <div class="row r1">
+        <div class="per-anaylsis">
+            <div class="category-container">
+                <div class="category food">
+                    <div class="category-p1">
+                        <ion-icon class="ic" name="fast-food-outline"></ion-icon>
+                        <h2>food</h2>
+                    </div>
+                    <h3>&#8377;{{addcash_data.food}}</h3>
+                </div>
+                <div class="category shopping">
+                    <div class="category-p1">
+                        <ion-icon class="ic" name="bag-handle-outline"></ion-icon>
+                        <h2>shopping</h2>
+                    </div>
+                    <h3>&#8377;{{addcash_data.shopping}}</h3>
+                </div>
+                <div class="category stationary">
+                    <div class="category-p1">
+                        <ion-icon class="ic" name="book-outline"></ion-icon>
+                        <h2>stationary</h2>
+                    </div>
+                    <h3>&#8377;{{addcash_data.stationary}}</h3>
+                </div>
+                <div class="category bills">
+                    <div class="category-p1">
+                        <ion-icon class="ic" name="card-outline"></ion-icon>
+                        <h2>bills</h2>
+                    </div>
+                    <h3>&#8377;{{addcash_data.bill}}</h3>
+                </div>
+            </div>
+            <div class="multiDoughnut">
+                <canvas id="multiDoughnutChart"></canvas>
+            </div>
+        </div>
+        <div class="cash-flow">
+            <h2>User profile</h2>
+            <div class="cfprt-1">
+                <div class="uname">
+                    <h1>{{u.first_name}}</h1>
+                    <h1>{{u.last_name}}</h1>
+                </div>
+            </div>
+            <div class="cfprt-2">
+                <div class="text">
+                    <h3 style="font-size: 20px">Income</h3>
+                    <p>&#8377;{{user_i.income}}<p><br><br>
+                    <h3 style="font-size: 20px">Expense</h3>
+                    <p>&#8377;{{expenditure}}</p>
+                </div>
+                <div class="cashflow-donut">
+                    <canvas id="myDoughnutChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--this is row 2-->
+    <div class="row r2">
+        <div class="table-container">
+            <table class= "table" id="expenditureTable">
+                <thead>
+                <tr>
+                    <th>Purpose</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for item in table_info %}
+                        <tr>
+                            <td>{{ item.purpose }}</td>
+                            <td>{{ item.category }}</td>
+                            <td>&#8377;{{ item.amount }}</td>
+                            <td>{{ item.date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="addcash">
+            <form method="post">
+            {% csrf_token %}
+            <div class="title"><h3>Add Expenditure</h3></div>
+            <div class="ac1">
+                <input type="text" name="purpose" id="purpose" placeholder="Purpose" required>
+                <div class="selectdrop"><label for="category">Select category :</label>
+                    <select id="cat" name="category" id="category">
+                        <option value="food">Food</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="stationary">Stationary</option>
+                        <option value="bills">Bills</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ac2">
+                <input type="number" name="amount" id="sum" style="margin-top: 1vh" placeholder="Amount" required>
+                <input id="date" name="date" type="date" placeholder="Date" required>
+            </div>
+            <button class="submitbtn" name="addexpense" type="submit" onclick="addExpenditure()">Submit</button>
+            </form>
+        </div>
+        
+    </div>
+
+    
+    <script>
+
+        function addExpenditure() {
+            var table = document.getElementById('expenditureTable');
+            var rowCount = table.rows.length;
+        
+            if (rowCount < 10) {
+                var newRow = table.insertRow(rowCount);
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+                var cell4 = newRow.insertCell(3);
+        
+                var purpose = document.getElementById('purpose').value;
+                var category = document.getElementById('cat').value;
+                var sum = document.getElementById('sum').value;
+                var date = document.getElementById('date').value;
+        
+                cell1.innerHTML = purpose;
+                cell2.innerHTML = category;
+                cell3.innerHTML = sum;
+                cell4.innerHTML = date;
+            } else {
+                alert('Maximum 10 rows are allowed');
+            }
+        }
+
+
+        var ctx1 = document.getElementById('myDoughnutChart').getContext('2d');
+        var ctx2 = document.getElementById('multiDoughnutChart').getContext('2d');
+        
+        
+        let exp = {{addcash_data.food}} + {{addcash_data.bill}} + {{addcash_data.shopping}} + {{addcash_data.stationary}}
+        let balance = {{user_i.income}} - exp
+        var dataValues = [exp, balance]
+        var muldataval = [{{addcash_data.food}}, {{addcash_data.bill}}, {{addcash_data.shopping}},{{addcash_data.stationary}}]
+        var myDoughnutChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Food', 'Bills', 'Shopping', 'Stationary'],
+                datasets: [{
+                    label: 'Dataset',
+                    data: muldataval,
+                    backgroundColor: [
+                        'rgba(255, 64, 0)',
+                        'rgba(77, 255, 136)',
+                        'rgba(0,255,255)',
+                        'rgba(153, 102, 255)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 254, 254, 0.5)'
+                        
+                    ],
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: false,
+                cutout: '60%',
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'right',
+                        labels:{
+                            color:'black',
+
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }
+                    },
+                    tooltip: {
+                        enabled: false,
+                    },
+
+                }
+            }
+        });
+
+        var myDoughnutChart = new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+                labels: ['Expenditure', 'Balance'],
+                datasets: [{
+                    label: 'Dataset',
+                    data: dataValues,
+                    backgroundColor: [
+                        'rgba(255, 99, 132)',
+                        'rgba(255, 255, 255, 0.596)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132)',
+                        'rgba(255, 255, 255, 0.596)',
+                    ],
+                    borderWidth: 1,
+                    hoverBackgroundColor: [
+                        'rgba(250, 30, 81)',
+                        'rgba(255, 255, 255, 0.596)',
+                    ]
+                }]
+            },
+            options: {
+                responsive: false,
+                cutout: '60%',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: true,
+                    },
+
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
