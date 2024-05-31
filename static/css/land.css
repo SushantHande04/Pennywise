@@ -5,6 +5,9 @@
     box-sizing: border-box;
     font-family: 'Comfortaa', sans-serif;
 }
+li{
+    list-style: none;
+}
 .logo{
     font-size: 2em;
     color: white;
@@ -57,7 +60,7 @@ nav{
     background: #ff4d4d;
 }
 .register a:hover{
-    border: 1px solid #ff4d4d;
+    border: 2px solid #ff4d4d;
     background: transparent;
 }
 .h-text{
@@ -71,6 +74,7 @@ nav{
 }
 .h-text span{
     letter-spacing: 5px;
+    font-size: 21px;
 }
 .h-text h1{
     font-size: 3em;
@@ -84,6 +88,52 @@ nav{
     transition: 0.4s;
 }
 .h-text a:hover{
-    border: 1px solid #ff4d4d;
+    border: 2px solid #ff4d4d;
     background: transparent;
+}
+
+/*hover effect*/
+.menu #a2, #a3{
+    position:relative;
+
+}
+.menu #a2 .info1 {
+    visibility : hidden;
+    opacity: 0;
+    position: absolute; 
+    top: 100%;
+    left:0; 
+    width: 25vw;
+    background-color: #bde9ff; /* Background color */
+    color : black;
+    padding: 10px; /* Add some padding */
+    border: 2px solid white;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    
+}
+
+.menu #a2:hover .info1 {
+    visibility : visible;
+    opacity: 1;
+    transition: .5s opacity;
+}
+.menu #a3 .info2 {
+    visibility : hidden;
+    opacity: 0;
+    position: absolute; 
+    top: 100%; 
+    left: 0;
+    background-color: #bde9ff; /* Background color */
+    color : black;
+    padding: 10px; /* Add some padding */
+    border: 2px solid white;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+}
+
+.menu #a3:hover .info2 {
+    visibility : visible;
+    opacity: 1;
+    transition: .5s opacity;
 }

@@ -8,10 +8,6 @@ class addcash(models.Model):
     amount = models.DecimalField(max_digits=8, decimal_places=0)
     date = models.DateField()
 
-    '''def __str__(self):
-        username = self.user.username
-        return username'''
-
 class user_info(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, unique = False)
     income = models.DecimalField(max_digits=8, decimal_places=0,  default=0)

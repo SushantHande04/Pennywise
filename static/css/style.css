@@ -28,13 +28,14 @@ body{
     font-size: 30px;
 }
 .category{
-    border-radius: 10px;
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     background: rgba(255, 254, 254, 0.5);
     backdrop-filter: blur(5px);
+    
 }
 #myDoughnutChart{
     height: 150px;
@@ -46,7 +47,7 @@ body{
     justify-content: center;
     align-items: center;
     background: rgba(255, 254, 254, 0.5);
-    border-radius: 10px;
+    border-radius: 20px;
     margin-left: 5px;
 }
 #multiDoughnutChart{
@@ -141,17 +142,7 @@ header a{
     display: flex;
     gap: .5vw;
 }
-.table-container{
-    width: 65%;
-    margin: 5px;
-    overflow: hidden;
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
-}
-.table{
-    overflow: auto;
-    scrollbar-gutter : stable;
-}
+
 
 .addcash{
     width: 35%;
@@ -220,12 +211,13 @@ header a{
 .ac1 select{
     padding: 5px;
     width: 40%;
-    border-radius: 10px;
     background: transparent;
     border: 2px solid rgb(109, 109, 109);
+    border-radius: 20px;
 }
 .selectdrop{
     margin-left: 2vw;
+    
 }
 .ac1 select:focus{
     outline: none;
@@ -246,6 +238,11 @@ header a{
     transition:  all 0.3s ease;
 }
 /*table*/
+.table-container{
+    width: 65%;
+    margin: 5px;
+    overflow-y: auto;
+}
 #expenditureTable {
     border-collapse: collapse;
     width: 100%;
@@ -277,7 +274,20 @@ header a{
     background-color: #d2d2d2;
    }
    
-
+   #date_col{
+    display:flex;
+    justify-content: space-between;
+   }
+   #monthSelect{
+    background: transparent;
+    border: 2px solid white;
+    color:white;
+    padding: 0 5px 0 5px;
+    border-radius: 20px;
+   }
+   #monthSelect:focus{
+    background: gray;
+   }
    /*.income_input{
     height: 100vh;
     width: 100vw;
